@@ -14,26 +14,23 @@ Problem Constraints
 Hint: https://portingguide.readthedocs.io/en/latest/comparisons.html
 """
 #This code only works on Python 2.x
+#This takes O(n logn) time complexity;
 class Solution:
 
+    def cmp_item(self, a, b):
+        if long(a+b) > long(b+a):
+            return -1
+        elif long(a+b) == long(b+a):
+            return 0
+        else:
+            return 1
+
     def largestNumber(self, A):
-        A = list(map(str, A)) #convert the int list into str list
-        A.sort(reverse = True)
-        #print("Before Loop: ", A)
+        A = list(map(str, A))
 
-        n = len(A) - 1
-
-        for i in range(n):
-            j = i + 1
-            while(j <= n and A[i][0] == A[j][0]):
-                if(int(A[i] + A[j]) < int(A[j] + A[i])):
-                    #place A[j] element at ith position
-                    temp = A[j]
-                    del A[j:j+1]
-                    A.insert(i, temp)
-                j += 1
-        #print(A)            
-        return str(int("".join(A)))
+        A = sorted(A, cmp = self.cmp_item)
+        
+        return str(long("".join(A)))
 
 s = Solution()
 
