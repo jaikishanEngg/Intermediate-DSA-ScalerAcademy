@@ -45,3 +45,4 @@ assert ans == [1]
 #case3: a trivial case
 ans = rotate([1,2,3,4,5],3)
 assert ans == [3,4,5,1,2]
+#print("Hello world!")
