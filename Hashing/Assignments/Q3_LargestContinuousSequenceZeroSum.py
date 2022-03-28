@@ -32,11 +32,12 @@ class Solution:
             #when they're duplicates in the prefix sum array, then there is a sub array of sum 0
             i = n - 1
             while i >= 0:
-                j = prefixSumArr.index(prefixSumArr[i])
+                j = prefixSumArr.index(prefixSumArr[i]) #find the index of the same element from beginning
                 if (prefixSumArr[i] == prefixSumArr[j]  and i != j) or prefixSumArr[i] == 0:
-                    if _lszeroSumLength < i - j + 1:
-                        _lszeroSumLength = i - j + 1
+                    if _lszeroSumLength < i - j:
+                        _lszeroSumLength = i - j
                         if prefixSumArr[i] == 0:
+                            if()
                             _lszeroSumCoord = (0, i)
                         else:
                             _lszeroSumCoord = (j + 1, i)
