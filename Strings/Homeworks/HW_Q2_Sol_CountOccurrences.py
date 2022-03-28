@@ -32,8 +32,12 @@ class Solution:
         return self.bobCount(A, 0)
         
 s = Solution()
-#A = "abobc"
-A = "bobob"
-
+#test case 1
+A = "abobc"
 ans = s.solve(A)
-print(ans)
+assert ans == 1
+
+#test case 2
+A = "bobob"
+ans = s.solve(A)
+assert ans == 2
