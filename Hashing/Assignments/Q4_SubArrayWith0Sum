@@ -1,0 +1,67 @@
+'''
+ * Created on Sat Apr 02 2022
+ *
+ * Copyright (c) 2022 Scaler Academy #DSA
+ * @author JaiKishan
+
+Problem Description
+Given an array of integers A, find and return whether the given array contains a non-empty subarray with a sum equal to 0.
+
+If the given array contains a sub-array with sum zero return 1, else return 0.
+
+Problem Constraints
+1 <= |A| <= 100000
+-10^9 <= A[i] <= 10^9
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return whether the given array contains a subarray with a sum equal to 0.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+Input 2:
+A = [-1, 1]
+
+Example Output
+Output 1:
+0
+Output 2:
+1
+'''
+class Solution:
+
+    def solve(self, A):
+        n = len(A)
+
+        #Build prefixSum Array
+        prefixSumArr = [A[0]]
+        for i in range(1, n):
+            prefixSumArr.append(prefixSumArr[i-1] + A[i])
+                        
+        #Build hashmap <element of prefixSumEle, firstOccuranceIndex>
+        hashmapPrefixA = dict()
+        hashmapPrefixA[0] = -1 #logically the prefixsum is zero before starting the array. 
+                                #it would be easy when we see another 0 in the prefix Sum array; we can directly fetch the distance
+
+        for r in range(n):
+            if prefixSumArr[r] in hashmapPrefixA:
+                #if we get any duplicate element in the prefixSum array, then definitely there is a sequence of elements with sum 0 (within the elements between duplicates)
+                return 1
+            else:
+                hashmapPrefixA[prefixSumArr[r]] = r
+        else:
+            return 0
+
+s = Solution()
+A = [1, 2, 3, 4, 5]
+ans = s.solve(A)
+assert ans == 0
+
+A = [-1, 1]
+ans = s.solve(A)
+assert ans == 1
+
+
