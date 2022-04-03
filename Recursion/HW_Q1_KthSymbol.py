@@ -37,6 +37,8 @@ Explanation 2:
     Row 1: 0
     Row 2: 01
 
+
+
 observations:
 0
 01
@@ -48,19 +50,40 @@ fun(n):
     if n == 1:
         return "0"
     else:
-        return fun(n-1) concat inversefunc(n-1)
+        return fun(n-1) concat inversefunc(fun(n-1))
 
 inversefunct(n):
     l = len(n)
     1111111's of length l ===> "1" * l
     bitwise or of above with n results into 1's complement
 '''
+from re import L
+
+
 class Solution:
     def kthSymbol(self, n):
         if n == 1:
             return "0"
         else:
-            return self.kthSymbol(n-1) + 
+            kthSym = self.kthSymbol(n-1)
+            return  kthSym + self.onescomplement(kthSym)
+
+    def onescomplement(self, n):
+        l = len(n)
+        ans = []
+        for i in range(l):
+            ans.append(int(n[i])^1)
+        
+        return "".join(list(map(str,ans)))
 
     def solve(self, A, B):
-        pass
+        ans = self.kthSymbol(A)
+        #print(ans)
+        return ans[B-1]
+
+s = Solution()
+ans = s.solve(4,8)
+assert ans == "1"
+
+ans = s.solve(1,1)
+assert ans == "0"
