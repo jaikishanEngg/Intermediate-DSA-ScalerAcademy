@@ -36,8 +36,22 @@ Explanation 2:
     The subarray [4,-1,2,1] has the maximum possible sum of 6. 
 '''
 
+from cmath import inf
+
+
 class Solution:
-    
+    def maxSubArray1(self, A):
+        n = len(A)
+        max_sum = - float('inf')
+        for i in range(n):
+            s = 0
+            for j in range(i, n):
+                s += A[j]
+                if(s > max_sum):
+                    max_sum = s
+        
+        return max_sum
+
     def maxSubArray(self, A):
         n = len(A)
         
@@ -63,11 +77,15 @@ s = Solution()
 #test case 1: simple 
 A = [1, 2, 3, 4, -10]
 ans = s.maxSubArray(A)
+ans1 = s.maxSubArray1(A)
 assert ans == 10
+print(ans1)
 
 A = [-2, 1, -3, 4, -1, 2, 1, -5, 4] 
 ans = s.maxSubArray(A)
+ans1 = s.maxSubArray1(A)
 assert ans == 6
+print(ans1)
 
 
 
