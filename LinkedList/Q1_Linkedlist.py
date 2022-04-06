@@ -55,19 +55,24 @@ class ListNode:
         self.next = None
 
 def insert_node(position, value):
+    newNode = ListNode(value)
+
     if(position == 1):
-        ListNode.head = ListNode(value)
+        newNode.next = ListNode.head
+        ListNode.head = newNode
     else:
         ptr = ListNode.head
         for i in range(position-2):
-            ptr = ptr.next
-        newNode = ListNode(value)
-        if(ptr):
-            newNode.next = ptr.next
-            ptr.next = newNode    
+            if(ptr):
+                ptr = ptr.next
+            else:
+                return
+        newNode.next = ptr.next
+        ptr.next = newNode    
 
 def delete_node(position):
     ptr = ListNode.head 
+    
     if(position == 1):
         #removing at beginning
         if(ptr):
@@ -80,18 +85,19 @@ def delete_node(position):
                 ptr = ptr.next
             else:
                 return
-        if(ptr):
-            if(ptr.next):
-                ptr.next = ptr.next.next
-            else:
-                ptr.next = None
+    
+        if(ptr.next):
+            ptr.next = ptr.next.next
+        else:
+            ptr.next = None
 
 
 def print_ll():
     # Output each element followed by a space
     ptr = ListNode.head
-    if(ptr):
-        while(ptr.next != None):
-            print(ptr.val, end= " ")
-            ptr = ptr.next
-        print(ptr.val)
+    values = []
+    while(ptr):
+        values.append(ptr.val)
+        ptr = ptr.next
+    print(*values)
+
