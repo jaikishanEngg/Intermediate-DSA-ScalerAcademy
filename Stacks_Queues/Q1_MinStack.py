@@ -64,43 +64,97 @@ Explanation 2:
     3) top() : Returns -1 as the stack is empty.
 '''
 class MinStack:
-    inputStack = [None]*10**7
-    stackTop = -1
-    minStack = [None]*10**7
-    minStackTop = -1
 
-    minValue = None
+    def __init__(self):    
+        self.inputStack = []
+        self.stackTop = -1
+        self.minStack = []
+        self.minStackTop = -1
+        self.minValue = None
+
     # @param x, an integer
     # @return an integer
     def push(self, x):
-        MinStack.stackTop += 1
-        MinStack.minStackTop += 1
 
-        if MinStack.minValue == None or x <= MinStack.minValue:
+        if self.stackTop == -1:
             #first element we're inserting
-            MinStack.minValue = x
-            MinStack.inputStack[MinStack.stackTop] = x
-            MinStack.minStack[MinStack.minStackTop] = x
-        else:
-            MinStack.inputStack[MinStack.stackTop] = x
-            MinStack.minStack[MinStack.minStackTop] = MinStack.min_value
+            self.minValue = x
+            self.stackTop += 1
+            self.minStackTop += 1
+            self.inputStack.append(x)
+            self.minStack.append(x)
+            return 
 
+        else:
+            if x <= self.minValue:
+                self.stackTop += 1
+                self.minStackTop += 1
+                self.minValue = x
+                self.inputStack.append(x)
+                self.minStack.append(self.minValue)
+            
+            else:
+                self.stackTop += 1
+                self.inputStack.append(x)
+            
+            return 
+            
     # @return nothing
     def pop(self):
-        if(MinStack.minStackTop != -1 and MinStack.stackTop != -1):
-            MinStack.stackTop -= 1
-            MinStack.minStackTop -= 1
-        
-    # @return an integer
-    def top(self):
-        if(MinStack.minStackTop != -1 and MinStack.stackTop != -1):
-            return MinStack.inputStack[MinStack.stackTop]
+        if(self.stackTop == -1):
+            return
         else:
-            return -1
+            x = self.inputStack[self.stackTop]
+            if x == self.minValue:
+                self.stackTop -= 1
+                self.minStackTop -= 1
+                self.inputStack.pop()
+                self.minStack.pop()
+                if self.minStackTop == -1:
+                    self.minValue = None
+                else:
+                    self.minValue = self.minStack[self.minStackTop]
+            else:
+                self.stackTop -= 1
+                self.inputStack.pop()
 
     # @return an integer
-    def getMin(self):
-        if(MinStack.minStackTop != -1 and MinStack.stackTop != -1):
-            return MinStack.minStack[MinStack.minStackTop]
-        else:
+    def top(self):
+        if(self.stackTop == -1):
             return -1
+        else:
+            return self.inputStack[self.stackTop]
+        
+    # @return an integer
+    def getMin(self):
+        if(self.minStackTop == -1):
+            return -1
+        else:
+            return self.minStack[self.minStackTop]        
+
+s = MinStack()
+print(s.pop())
+s.push(544)
+print(s.getMin())
+print(s.top())
+print(s.top())
+print(s.top())
+print(s.pop())
+
+s.push(208)
+s.pop()
+
+s.push(204)
+print(s.getMin())
+print(s.top())
+print(s.getMin())
+print(s.top())
+
+s.push(691)
+s.push(61)
+print(s.getMin())
+print(s.top())
+s.pop()
+print(s.top())
+print(s.getMin())
+
