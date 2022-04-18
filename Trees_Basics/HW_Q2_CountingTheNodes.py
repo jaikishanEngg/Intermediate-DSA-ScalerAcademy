@@ -43,3 +43,30 @@ Explanation 1:
 Explanation 2:
     The valid nodes are 4, 5 and 6.
 '''
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def __init__(self):
+        self.ans = 0
+
+    def dfs(self, root,maxsofar):
+        if root == None:
+            return 0
+        if(root.val > maxsofar):
+            self.ans += 1
+            maxsofar = root.val
+
+        self.dfs(root.left, maxsofar)
+        self.dfs(root.right, maxsofar)
+
+        return self.ans
+
+    def solve(self, A):
+        return self.dfs(A, 0)
