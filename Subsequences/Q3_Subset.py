@@ -68,12 +68,33 @@ Explanation 2:
 
 You can see that these are all possible subsets.
 '''
+#Hint: No.of possible subsets are 2**n where n is the number of elements in the input array
+    #I'll take a binary representation of numbers from 0 to 2**n 
+    # and whenever the bit is set I'll keep adding the corresponding element from A
+
 class Solution:
 	# @param A : list of integers
 	# @return a list of list of integers
     def subsets(self, A):
+        A = list(set(A)) #remove duplicates if any
+        A.sort()    #sort the elements in lexigographic (ascending) order
         n = len(A)
-        l = 2**n
-        
+        subsets = [[],] #output list of subsets
 
+        for set_i in range(1, 2**n):    #no.of subsets possible are 2**n
+            temp_set = []
+            i = 0
+            while(set_i):
+                if (set_i) & 1:
+                    temp_set.append(A[i])
+                i += 1
+                set_i >>= 1
+            subsets.append(temp_set)
+        subsets.sort()
+        return subsets
 
+s = Solution()
+A = [1, 2, 3]
+A = [ 15, 20, 12, 19, 4 ]
+ans = s.subsets(A)
+print(ans)

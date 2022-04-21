@@ -54,20 +54,42 @@ Explanation 1:
 Explanation 2:
     Sum of value of all subarray is 110.
 '''
-class Solution:
+class Solution:       
     # @param A : list of integers
     # @return an integer
     def solve(self, A):
         n = len(A)
+        max_element = max(A)
+        
+        max_element_binary = bin(max_element)[2:] # "str bin(int)" inbuild method in python  returns a binary representation of an int., 
+        index = [0] * len(max_element_binary) #this is extra space = log (max_element) = i.e., no.of bits in binary rep., of max_element
+        
         ans = 0
+        m = len(index)
+
         for i in range(n):
-            orsum = 0
-            for j in range(i,n):
-                orsum |= A[j]
-                ans += orsum
-        return ans
+            ele = bin(A[i])[2:]
+            ele = ('0' * (m - len(ele))) + ele
+
+            for j in range(m-1, -1 , -1):
+                k = abs(j - m + 1)
+                if(int(ele[j]) & 1):
+                    #if the bit is set
+                    ans += ((i+1) * 2**k)
+                    index[k] = (i+1)
+                else:
+                    #if the bit is unset
+                    ans += (index[k] * 2**k)
+        
+        return ans % (10**9 + 7)
             
 s = Solution()
+A = [7, 8, 9, 10] #110
+A = [1, 2, 3, 4, 5] #71
+A = [3,1,2] #15
+A = [7, 12, 8 ,1] #107
+#print(s.decimalToBinary(2))
+print(s.solve(A))
 
 A = [ 347148, 221001, 394957, 729925, 276769, 40726, 552988, 29952, 184491, 146773, 418965, 
 307, 219145, 183037, 178111, 81123, 109199, 683929, 422034, 346291, 11434, 7327, 340473, 
@@ -79,4 +101,5 @@ A = [ 347148, 221001, 394957, 729925, 276769, 40726, 552988, 29952, 184491, 1467
 76077, 75481, 386017, 153553, 304913, 383455, 105948, 142885, 1, 12610, 137005, 
 119185, 16948, 66171, 123683]
 
-print(s.solve(A))
+
+#print(s.solve(A))
